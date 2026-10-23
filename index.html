@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <base href="/">
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="بوابة المريض: ملف طبي واحد لكل مريض، يفتحه الطبيب بإذنك، وروشتة إلكترونية تُصرف من الصيدلية مرة واحدة.">
+  <meta name="theme-color" content="#0A36B0">
+
+  <meta name="mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="بوابة المريض">
+  <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+
+  <meta property="og:type" content="website">
+  <meta property="og:site_name" content="Patient Access">
+  <meta property="og:url" content="https://patientaccess.site/">
+  <meta property="og:title" content="بوابة المريض | Patient Access">
+  <meta property="og:description" content="ملف طبي واحد لكل مريض، يفتحه الطبيب بإذنك، وروشتة إلكترونية تُصرف من الصيدلية مرة واحدة.">
+  <meta property="og:image" content="https://patientaccess.site/og.jpg">
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  <meta property="og:locale" content="ar_EG">
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:image" content="https://patientaccess.site/og.jpg">
+
+  <link rel="icon" type="image/png" href="favicon.png"/>
+  <title>بوابة المريض | Patient Access</title>
+  <link rel="manifest" href="manifest.json">
+  <style>
+    body { margin: 0; background: #F3F7FC; }
+    #splash { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+    #splash img { width: 120px; height: 120px; animation: pulse 1.4s ease-in-out infinite; }
+    @keyframes pulse { 50% { transform: scale(0.92); opacity: .75; } }
+  </style>
+</head>
+<body>
+  <div id="splash"><img src="icons/symbol.png" alt=""></div>
+  <script>
+    window.addEventListener('flutter-first-frame', function () {
+      var s = document.getElementById('splash'); if (s) s.remove();
+    });
+  </script>
+  <script src="flutter_bootstrap.js" async></script>
+</body>
+</html>
