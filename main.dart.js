@@ -122508,7 +122508,7 @@ $.hU()
 p=$.b0().b
 p===$&&A.a()
 p=p.gek().e.a
-if(p==null)B.b.P(q,A.b([A.x(A.h(A.f(a),"aqr_sign_in"),k,k,k,k,B.cZ,B.aq,k,k),B.at,A.cx(!1,!1,k,A.h(A.f(a),"sign_in"),new A.aLk(l,a),B.aX)],r))
+if(p==null&&i==null)B.b.P(q,A.b([A.x(A.h(A.f(a),"aqr_sign_in"),k,k,k,k,B.cZ,B.aq,k,k),B.at,A.cx(!1,!1,k,A.h(A.f(a),"sign_in"),new A.aLk(l,a),B.aX)],r))
 else{p=i==null
 if((p?k:i.c==="diagnostics")===!0)o=(p?k:i.a)==="active"
 else o=!1
