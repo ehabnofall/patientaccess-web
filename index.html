@@ -33,6 +33,8 @@
     #splash { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
     #splash img { width: 120px; height: 120px; animation: pulse 1.4s ease-in-out infinite; }
     @keyframes pulse { 50% { transform: scale(0.92); opacity: .75; } }
+    /* Guides cannot be printed. */
+    @media print { body.no-print * { display: none !important; } body.no-print::after { content: 'Printing is not allowed'; } }
   </style>
 </head>
 <body>
