@@ -28,17 +28,28 @@
   <link rel="icon" type="image/png" href="favicon.png"/>
   <title>بوابة المريض | Patient Access</title>
   <link rel="manifest" href="manifest.json">
+  <link rel="canonical" href="https://patientaccess.site/">
+  <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"بوابة المريض | Patient Access","url":"https://patientaccess.site/","logo":"https://patientaccess.site/icons/Icon-512.png"},{"@type":"WebSite","name":"بوابة المريض","alternateName":"Patient Access","url":"https://patientaccess.site/","inLanguage":["ar","en"]}]}</script>
   <style>
     body { margin: 0; background: #F3F7FC; }
     #splash { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
+    #splash { flex-direction: column; text-align: center; font-family: Tahoma, sans-serif; color: #13203A; padding: 16px; }
     #splash img { width: 120px; height: 120px; animation: pulse 1.4s ease-in-out infinite; }
+    #splash h1 { color: #062578; font-size: 22px; margin: 18px 0 6px; }
+    #splash p { color: #5B6B85; max-width: 560px; margin: 0 0 12px; line-height: 1.7; }
+    #splash nav a { color: #0A36B0; margin: 0 8px; font-weight: bold; text-decoration: none; }
     @keyframes pulse { 50% { transform: scale(0.92); opacity: .75; } }
     /* Guides cannot be printed. */
     @media print { body.no-print * { display: none !important; } body.no-print::after { content: 'Printing is not allowed'; } }
   </style>
 </head>
 <body>
-  <div id="splash"><img src="icons/symbol.png" alt=""></div>
+  <div id="splash">
+    <img src="icons/symbol.png" alt="بوابة المريض">
+    <h1>بوابة المريض: ملفك الطبي آمنٌ ومعك في كل مكان</h1>
+    <p>ملف طبي واحد لكل مريض، لا يفتحه الطبيب إلا بإذنك، وروشتة إلكترونية تُصرف من الصيدلية مرة واحدة، وحجز مواعيد الأطباء أونلاين، ونتائج التحاليل والأشعة في ملفك.</p>
+    <nav><a href="/patients/">للمرضى</a><a href="/doctors/">للأطباء والعيادات</a><a href="/pharmacies/">للصيدليات</a><a href="/labs/">للمعامل والأشعة</a><a href="/services/">دليل المنشآت</a></nav>
+  </div>
   <script>
     window.addEventListener('flutter-first-frame', function () {
       var s = document.getElementById('splash'); if (s) s.remove();
