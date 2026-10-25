@@ -1,0 +1,29 @@
+# Every night: rebuild the search-engine pages (/services/ and one page per
+# published ad) and sitemap.xml from the live ads, and publish if anything
+# changed. The key below is the public "publishable" key the website already
+# uses; it can only read what visitors can read.
+name: Daily SEO pages
+on:
+  schedule:
+    - cron: '17 0 * * *'   # 02:17 Egypt time (03:17 in summer)
+  workflow_dispatch:
+permissions:
+  contents: write
+jobs:
+  seo:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - name: Build pages
+        env:
+          SUPABASE_PUBLISHABLE_KEY: sb_publishable_k0vAGb5WOEXEoGRdkQFyJw_1DFxHd3B
+        run: python3 .github/scripts/seo.py .
+      - name: Publish if changed
+        run: |
+          git add -A services sitemap.xml robots.txt patients doctors pharmacies labs
+          if git diff --cached --quiet -- services; then echo "No ad changes"; exit 0; fi
+          git -c user.name="seo-bot" -c user.email="seo-bot@users.noreply.github.com" commit -m "Daily SEO pages"
+          git push
