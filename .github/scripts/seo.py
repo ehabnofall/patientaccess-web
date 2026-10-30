@@ -135,6 +135,21 @@ PROMOS = [
      'سجلّ الحيوانات الأليفة في مصر: ملف طبي لكل حيوان برقم شريحته، وروشتة إلكترونية، ونقل ملكية آمن، ودليل رعاية للكلاب والقطط.',
      'ادخل Pets4Pals ↗'),
 ]
+YT_CSS = (".yt-ad{display:grid;grid-template-columns:58% 1fr;border-radius:18px;overflow:hidden;border:1px solid rgba(255,0,51,.35);"
+          "background:linear-gradient(270deg,#4a0618,#1a0820);text-decoration:none;margin-bottom:12px}"
+          ".yt-ad img{width:100%;height:auto;aspect-ratio:16/9;object-fit:cover;display:block}"
+          ".yt-tx{padding:18px 20px;display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:6px;color:#fff}"
+          ".yt-h{display:flex;align-items:center;gap:8px;font-weight:800;font-size:19px}.yt-p{display:block;margin:0 0 12px;color:rgba(255,255,255,.78);font-size:14px}"
+          ".yt-ic{width:28px;height:20px;border-radius:6px;background:#ff0033;position:relative;flex:none}"
+          ".yt-ic::after{content:'';position:absolute;left:11px;top:5px;border-style:solid;border-width:5px 0 5px 8px;border-color:transparent transparent transparent #fff}"
+          "@media(max-width:620px){.yt-ad{grid-template-columns:1fr}}"
+          ".yt-cta{position:relative;overflow:hidden;display:inline-block;color:#fff;font-weight:800;padding:12px 22px;border-radius:999px;white-space:nowrap;background:linear-gradient(180deg,#ff5a78 0%,#ff0033 45%,#c4001f 100%);border:1px solid rgba(255,255,255,.25);box-shadow:inset 0 2px 0 rgba(255,255,255,.45),inset 0 -3px 0 rgba(0,0,0,.25),0 5px 0 #7a0014,0 10px 24px rgba(255,0,51,.45);text-shadow:0 1px 2px rgba(0,0,0,.35);transition:transform .12s,box-shadow .12s}"
+          ".yt-cta::before{content:\"\";position:absolute;inset:0 0 50% 0;border-radius:999px 999px 40% 40%;background:linear-gradient(180deg,rgba(255,255,255,.4),rgba(255,255,255,.05));pointer-events:none}"
+          ".yt-cta::after{content:\"\";position:absolute;top:-20%;bottom:-20%;width:40%;left:-60%;background:linear-gradient(100deg,transparent,rgba(255,255,255,.65),transparent);transform:skewX(-20deg);animation:ytShine 2.8s ease-in-out infinite;pointer-events:none}"
+          "@keyframes ytShine{0%,55%{left:-60%}100%{left:130%}}"
+          ".yt-ad:hover .yt-cta{transform:translateY(-2px)}"
+          ".yt-ad:active .yt-cta{transform:translateY(4px);box-shadow:inset 0 2px 0 rgba(255,255,255,.4),0 1px 0 #7a0014,0 4px 10px rgba(255,0,51,.4)}"
+          "@media (prefers-reduced-motion:reduce){.yt-cta::after{animation:none}}")
 PROMO_CSS = (".promo{margin:22px auto}.promo .ph{display:flex;align-items:center;gap:8px;color:#5b6478;font-weight:800;font-size:14px;margin-bottom:10px}"
              ".promo .ph span{background:#edeff5;border-radius:20px;padding:2px 8px;font-size:11.5px;font-weight:600}"
              ".promo .pg{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:600px){.promo .pg{grid-template-columns:1fr}}"
@@ -143,12 +158,19 @@ PROMO_CSS = (".promo{margin:22px auto}.promo .ph{display:flex;align-items:center
              ".promo p{margin:0;font-size:13.5px;line-height:1.6;color:#1b2333}.promo .pb{align-self:flex-end;font-weight:800;text-decoration:none;margin-top:auto}")
 
 
+def yt_html(slot):
+    return (f'<a class="yt-ad" href="https://www.youtube.com/@ehab_nofal?sub_confirmation=1&amp;utm_source=patientaccess&amp;utm_medium=house&amp;utm_campaign={slot}" target="_blank" rel="noopener">'
+            '<img src="/promo_bobos_yt.webp" loading="lazy" width="960" height="540" alt="قناة BOBOS على يوتيوب">'
+            '<span class="yt-tx"><span class="yt-h"><span class="yt-ic"></span>قناة BOBOS على يوتيوب</span>'
+            '<span class="yt-p">كليبات وأغاني جديدة أول بأول</span><span class="yt-cta">اشترك الآن 🔔</span></span></a>')
+
+
 def promo_html(slot):
     cards = ''.join(
         f'<div class="pc"><div class="pn" style="color:{c}"><span class="pe" style="background:{c}1f">{em}</span><span dir="ltr">{e(n)}</span></div>'
         f'<p>{e(d)}</p><a class="pb" style="color:{c}" href="{u}?utm_source=patientaccess&amp;utm_medium=house&amp;utm_campaign={slot}" target="_blank" rel="noopener">{e(b)}</a></div>'
         for n, em, c, u, d, b in PROMOS)
-    return f'<aside class="promo wrap" aria-label="من مواقعنا (إعلان)"><div class="ph">من مواقعنا <span>إعلان · موقع آخر</span></div><div class="pg">{cards}</div></aside>'
+    return f'<aside class="promo wrap" aria-label="من مواقعنا (إعلان)"><div class="ph">من مواقعنا <span>إعلان · موقع آخر</span></div>{yt_html(slot) if slot == 'top' else ''}<div class="pg">{cards}</div></aside>'
 
 
 def page(path, title, meta, body, jsonld=None):
@@ -163,7 +185,7 @@ def page(path, title, meta, body, jsonld=None):
 <meta property="og:type" content="website"><meta property="og:site_name" content="بوابة المريض | Patient Access">
 <meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(meta)}">
 <meta property="og:url" content="{SITE}{path}"><meta property="og:image" content="{SITE}/og.jpg"><meta property="og:locale" content="ar_EG">
-<link rel="icon" href="/favicon.png"><style>{CSS}{PROMO_CSS}</style>{ld}</head><body>
+<link rel="icon" href="/favicon.png"><style>{CSS}{PROMO_CSS}{YT_CSS}</style>{ld}</head><body>
 <header><div class="wrap"><a href="/"><img src="/assets/assets/images/logo_wide.png" alt="بوابة المريض Patient Access"></a><nav>{nav}</nav></div></header>
 {body}
 {promo_html('bottom')}
