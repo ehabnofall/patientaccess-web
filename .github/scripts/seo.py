@@ -45,7 +45,8 @@ CSS = """
 header{background:#fff;border-bottom:1px solid var(--line)}
 .wrap{max-width:960px;margin:0 auto;padding:0 18px}
 header .wrap{display:flex;align-items:center;justify-content:space-between;gap:12px;height:68px}
-header img{height:44px}
+header img{height:44px;flex:none}
+header nav{min-width:0;overflow-x:auto;white-space:nowrap;scrollbar-width:none}
 nav a{color:var(--blue);text-decoration:none;font-weight:700;margin-inline-start:14px;font-size:15px}
 .hero{background:linear-gradient(135deg,#E8F0FB,#DDF7EE);padding:38px 0 30px}
 h1{color:var(--navy);font-size:32px;line-height:1.35;margin:0 0 8px}
@@ -126,8 +127,33 @@ ROLES = {
 ROLE_NAV = [('patients', 'للمرضى'), ('doctors', 'للأطباء'), ('pharmacies', 'للصيدليات'), ('labs', 'للمعامل والأشعة'), ('services', 'دليل المنشآت')]
 
 
+PROMOS = [
+    ('BOBOS FM', '<img src="/promo_bobosfm.png" alt="" width="40" height="40">', '#6A3FD0', 'https://bobosfm.online/',
+     'راديو أونلاين 24 ساعة: أغاني BOBOS بالكلمات الكاملة، وراديو موسيقى، وإذاعة القرآن الكريم ومعاها المصحف كامل بالتشكيل.',
+     'اسمع BOBOS FM ↗'),
+    ('Pets4Pals', '<img src="/promo_pets4pals.png" alt="" width="40" height="40">', '#E07A1F', 'https://pets4pals.online/',
+     'سجلّ الحيوانات الأليفة في مصر: ملف طبي لكل حيوان برقم شريحته، وروشتة إلكترونية، ونقل ملكية آمن، ودليل رعاية للكلاب والقطط.',
+     'ادخل Pets4Pals ↗'),
+]
+PROMO_CSS = (".promo{margin:22px auto}.promo .ph{display:flex;align-items:center;gap:8px;color:#5b6478;font-weight:800;font-size:14px;margin-bottom:10px}"
+             ".promo .ph span{background:#edeff5;border-radius:20px;padding:2px 8px;font-size:11.5px;font-weight:600}"
+             ".promo .pg{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:600px){.promo .pg{grid-template-columns:1fr}}"
+             ".promo .pc{background:#f8f9fc;border:1px solid #e1e5ef;border-radius:16px;padding:14px;display:flex;flex-direction:column;gap:8px}"
+             ".promo .pn{display:flex;align-items:center;gap:10px;font-weight:800;font-size:16px}.promo .pe{width:44px;height:44px;border-radius:12px;display:grid;place-items:center;font-size:21px}"
+             ".promo p{margin:0;font-size:13.5px;line-height:1.6;color:#1b2333}.promo .pb{align-self:flex-end;font-weight:800;text-decoration:none;margin-top:auto}")
+
+
+def promo_html(slot):
+    cards = ''.join(
+        f'<div class="pc"><div class="pn" style="color:{c}"><span class="pe" style="background:{c}1f">{em}</span><span dir="ltr">{e(n)}</span></div>'
+        f'<p>{e(d)}</p><a class="pb" style="color:{c}" href="{u}?utm_source=patientaccess&amp;utm_medium=house&amp;utm_campaign={slot}" target="_blank" rel="noopener">{e(b)}</a></div>'
+        for n, em, c, u, d, b in PROMOS)
+    return f'<aside class="promo wrap" aria-label="من مواقعنا (إعلان)"><div class="ph">من مواقعنا <span>إعلان · موقع آخر</span></div><div class="pg">{cards}</div></aside>'
+
+
 def page(path, title, meta, body, jsonld=None):
     nav = ''.join(f'<a href="/{k}/">{e(n)}</a>' for k, n in ROLE_NAV)
+    body = body.replace('</section>', '</section>' + promo_html('top'), 1)
     ld = f'<script type="application/ld+json">{json.dumps(jsonld, ensure_ascii=False)}</script>' if jsonld else ''
     doc = f'''<!doctype html><html lang="ar" dir="rtl"><head><meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -137,9 +163,10 @@ def page(path, title, meta, body, jsonld=None):
 <meta property="og:type" content="website"><meta property="og:site_name" content="بوابة المريض | Patient Access">
 <meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(meta)}">
 <meta property="og:url" content="{SITE}{path}"><meta property="og:image" content="{SITE}/og.jpg"><meta property="og:locale" content="ar_EG">
-<link rel="icon" href="/favicon.png"><style>{CSS}</style>{ld}</head><body>
+<link rel="icon" href="/favicon.png"><style>{CSS}{PROMO_CSS}</style>{ld}</head><body>
 <header><div class="wrap"><a href="/"><img src="/assets/assets/images/logo_wide.png" alt="بوابة المريض Patient Access"></a><nav>{nav}</nav></div></header>
 {body}
+{promo_html('bottom')}
 <footer><div class="wrap">بوابة المريض · Patient Access · <a href="/">patientaccess.site</a> · <a href="/#/terms">الشروط</a> · <a href="/#/privacy">الخصوصية</a></div></footer>
 </body></html>'''
     f = OUT / path.strip('/') / 'index.html'
