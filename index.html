@@ -31,6 +31,9 @@
   <link rel="canonical" href="https://patientaccess.site/">
   <script type="application/ld+json">{"@context":"https://schema.org","@graph":[{"@type":"Organization","name":"بوابة المريض | Patient Access","url":"https://patientaccess.site/","logo":"https://patientaccess.site/icons/Icon-512.png"},{"@type":"WebSite","name":"بوابة المريض","alternateName":"Patient Access","url":"https://patientaccess.site/","inLanguage":["ar","en"]}]}</script>
   <style>
+    /* Flutter places its HTML pieces (videos, links) as if the page were
+       left-to-right; Arabic text is drawn by Flutter itself. */
+    flutter-view, flt-glass-pane { direction: ltr; }
     body { margin: 0; background: #F3F7FC; }
     #splash { position: fixed; inset: 0; display: flex; align-items: center; justify-content: center; }
     #splash { flex-direction: column; text-align: center; font-family: Tahoma, sans-serif; color: #13203A; padding: 16px; }

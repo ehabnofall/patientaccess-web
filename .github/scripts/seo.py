@@ -150,6 +150,28 @@ YT_CSS = (".yt-ad{display:grid;grid-template-columns:58% 1fr;border-radius:18px;
           ".yt-ad:hover .yt-cta{transform:translateY(-2px)}"
           ".yt-ad:active .yt-cta{transform:translateY(4px);box-shadow:inset 0 2px 0 rgba(255,255,255,.4),0 1px 0 #7a0014,0 4px 10px rgba(255,0,51,.4)}"
           "@media (prefers-reduced-motion:reduce){.yt-cta::after{animation:none}}")
+SIDE_CSS = (".side-ad{display:none}@media(min-width:1440px){.side-ad{display:flex;position:fixed;top:50%;transform:translateY(-50%);width:178px;flex-direction:column;align-items:center;gap:8px;z-index:5}"
+            ".side-ad.r{right:16px}.side-ad.l{left:16px}}"
+            ".side-ad small{color:#5b6478;font-size:11.5px;font-weight:600}"
+            ".side-ad .sv{display:block;width:178px;height:316px;border-radius:16px;overflow:hidden;background:#140b36 url(/promo_bobosfm_side.jpg) center/cover;box-shadow:0 6px 18px rgba(106,63,208,.25)}"
+            ".side-ad video{width:100%;height:100%;object-fit:cover;display:block}"
+            ".side-ad .sb{display:block;width:100%;text-align:center;background:#6a3fd0;color:#fff;font-weight:800;padding:10px 0;border-radius:999px;text-decoration:none;font-size:14px}"
+            ".side-ad .su{color:#5b6478;font-size:12px}")
+SIDE_JS = ("<script>if(matchMedia('(min-width:1440px)').matches){var m=matchMedia('(prefers-reduced-motion: reduce)').matches;"
+           "document.querySelectorAll('.side-ad .sv').forEach(function(a){var v=document.createElement('video');v.src='/promo_bobosfm_side.mp4';"
+           "v.poster='/promo_bobosfm_side.jpg';v.muted=true;v.loop=true;v.playsInline=true;v.setAttribute('aria-hidden','true');if(!m){v.autoplay=true;}a.appendChild(v);});}</script>")
+
+
+def side_html():
+    out = ''
+    for c, side in (('r', 'right'), ('l', 'left')):
+        u = f'https://bobosfm.online/?utm_source=patientaccess&amp;utm_medium=house&amp;utm_campaign=side_{side}'
+        out += (f'<aside class="side-ad {c}" aria-label="من مواقعنا (إعلان)"><small>من مواقعنا · إعلان</small>'
+                f'<a class="sv" href="{u}" target="_blank" rel="noopener" aria-label="BOBOS FM"></a>'
+                f'<a class="sb" href="{u}" target="_blank" rel="noopener">اسمع BOBOS FM ↗</a><span class="su" dir="ltr">bobosfm.online</span></aside>')
+    return out
+
+
 PROMO_CSS = (".promo{margin:22px auto}.promo .ph{display:flex;align-items:center;gap:8px;color:#5b6478;font-weight:800;font-size:14px;margin-bottom:10px}"
              ".promo .ph span{background:#edeff5;border-radius:20px;padding:2px 8px;font-size:11.5px;font-weight:600}"
              ".promo .pg{display:grid;grid-template-columns:1fr 1fr;gap:12px}@media(max-width:600px){.promo .pg{grid-template-columns:1fr}}"
@@ -185,10 +207,11 @@ def page(path, title, meta, body, jsonld=None):
 <meta property="og:type" content="website"><meta property="og:site_name" content="بوابة المريض | Patient Access">
 <meta property="og:title" content="{e(title)}"><meta property="og:description" content="{e(meta)}">
 <meta property="og:url" content="{SITE}{path}"><meta property="og:image" content="{SITE}/og.jpg"><meta property="og:locale" content="ar_EG">
-<link rel="icon" href="/favicon.png"><style>{CSS}{PROMO_CSS}{YT_CSS}</style>{ld}</head><body>
+<link rel="icon" href="/favicon.png"><style>{CSS}{PROMO_CSS}{YT_CSS}{SIDE_CSS}</style>{ld}</head><body>
 <header><div class="wrap"><a href="/"><img src="/assets/assets/images/logo_wide.png" alt="بوابة المريض Patient Access"></a><nav>{nav}</nav></div></header>
 {body}
 {promo_html('bottom')}
+{side_html()}{SIDE_JS}
 <footer><div class="wrap">بوابة المريض · Patient Access · <a href="/">patientaccess.site</a> · <a href="/#/terms">الشروط</a> · <a href="/#/privacy">الخصوصية</a></div></footer>
 </body></html>'''
     f = OUT / path.strip('/') / 'index.html'
