@@ -1,6 +1,6 @@
 # Privacy policy
 
-**Draft of 23 October 2026, subject to legal review before launch. The Arabic version is binding.**
+**Last updated: 23 October 2026. The Arabic version is binding.**
 
 ## 1. What we collect
 - **Identity:** name, national ID, birth date, sex, governorate, address, email, mobile; syndicate number for clinicians and pharmacists.

@@ -1,6 +1,6 @@
 # Terms of use
 
-**Draft of 23 October 2026, subject to legal review before launch. The Arabic version is binding.**
+**Last updated: 23 October 2026. The Arabic version is binding.**
 
 ## 1. About the platform
 Patient Access keeps each patient's medical file, lets registered clinics and hospitals see it with the patient's permission, and lets them write e-prescriptions that registered pharmacies dispense once.
